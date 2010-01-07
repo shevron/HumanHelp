@@ -41,7 +41,8 @@ class IndexController extends Zend_Controller_Action
                 
                 try {
                     $comment->save();
-                
+                    $this->_sendNewCommentEmail($comment, $page);
+                    
                     // Redirect back to page
                     $this->_redirect("/$bookName/$pageName?done=ok#");
                 } catch (Exception $ex) {
@@ -54,6 +55,45 @@ class IndexController extends Zend_Controller_Action
         $this->view->page = $page;
         $this->view->commentForm = $commentForm;
         $this->view->commentsAreModerated = $config->moderateComments;  
+    }
+    
+    public function _sendNewCommentEmail(HumanHelp_Model_Comment $comment, HumanHelp_Model_Page $page)
+    {
+        $config = Zend_Registry::get('config');
+        
+        $emailTemplate = new Zend_View();
+        $emailTemplate->setScriptPath(APPLICATION_PATH . '/views/emails');
+        $emailTemplate->setEncoding('UTF-8');
+        
+        $emailTemplate->comment = $comment;
+        $emailTemplate->page = $page;
+        $emailTemplate->baseUrl = $this->view->baseUrl;
+        
+        $bodyHtml = $emailTemplate->render('newComment.phtml');
+        $bodyText = $emailTemplate->render('newComment.txt');
+         
+        $mail = new Zend_Mail();
+        $mail->setType(Zend_Mime::MULTIPART_ALTERNATIVE)
+             ->setBodyHtml($bodyHtml, 'UTF-8')
+             ->setBodyText($bodyText, 'UTF-8')
+             ->setSubject("New comment on '{$page->getTitle()}' in '{$page->getBook()->getTitle()}'")
+             ->setFrom($config->fromAddress, $config->fromName);
+             
+        if (is_object($config->notifyComments)) {
+            foreach($config->notifyComments->toArray() as $rcpt) {
+                $mail->addTo($rcpt);
+            }
+        } else {
+            $mail->addTo($config->notifyComments);
+        }
+
+        if ($config->smtpServer) {
+            $transport = new Zend_Mail_Transport_Smtp($config->smtpServer, $config->smtpOptions);
+        } else {
+            $transport = new Zend_Mail_Transport_Sendmail();
+        }
+        
+        $mail->send($transport);
     }
 }
 
