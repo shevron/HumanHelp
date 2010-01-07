@@ -1,0 +1,32 @@
+<?php 
+
+/**
+ * HumanHelp - main layout template file
+ * 
+ */
+
+$this->headLink()->appendStylesheet($this->baseUrl . '/css/common.css');
+
+echo '<?xml version="1.0" encoding="UTF-8" ?>';
+?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <?php echo $this->headTitle(); ?> 
+    <?php echo $this->headLink(); ?> 
+    <?php echo $this->headScript(); ?>
+</head>
+<body>
+    <div id="upper-bar">
+        <h1><?php echo (isset($this->book) ? htmlspecialchars($this->book->getTitle()) : 'Default Title'); ?></h1>
+    </div>
+    
+    <div id="page-content">
+        <?php echo $this->layout()->content; ?>
+    </div>
+    
+    <div id="footer">
+        Powered by HumanHelp 0.1
+    </div>
+</body>
+</html>
