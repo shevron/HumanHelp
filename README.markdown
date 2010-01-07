@@ -31,13 +31,12 @@ Credits
 - Artwork:
 
 HumanHelp uses the following 3rd party components:
-- Zend Framework, http://framework.zend.com
+
+- Zend Framework, http://framework.zend.com  
   Copyright (c) 2005-2010 Zend Technologies Inc
-
-- jQuery JavaScript Library, http://jquery.com
+- jQuery JavaScript Library, http://jquery.com  
   Copyright (c) 2009 John Resig
-
-- jQuery Treeview Plugin, http://docs.jquery.com/Plugins/Treeview
+- jQuery Treeview Plugin, http://docs.jquery.com/Plugins/Treeview  
   Copyright (c) 2007 Jörn Zaefferer
 
 Adobe and RoboHelp are registered trademarks of Adobe Systems Incorporated
