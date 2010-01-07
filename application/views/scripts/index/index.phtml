@@ -36,7 +36,9 @@ $this->headLink()->appendStylesheet($this->baseUrl . '/css/jquery.treeview.css')
 
             <div id="post-comment">
                 <h3>Post a Comment</h3>
+<?php if ($this->commentsAreModerated): ?>
                 <p>Please note: comments are moderated</p>
+<?php endif; ?>
                 <?php echo $this->commentForm; ?>
             </div>
         </div>

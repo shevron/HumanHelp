@@ -4,7 +4,8 @@ class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
     {
-        $bookName = $this->_getParam('book', Zend_Registry::get('config')->defaultBook);
+        $config = Zend_Registry::get('config');
+        $bookName = $this->_getParam('book', $config->defaultBook);
         $pageName = $this->_getParam('page');
         
         $book = new HumanHelp_Model_Book($bookName);
@@ -34,7 +35,7 @@ class IndexController extends Zend_Controller_Action
                     'token'        => HumanHelp_Model_Comment::generateToken(),
                 ));
                 
-                if (Zend_Registry::get('config')->moderateComments) {
+                if (! $config->moderateComments) {
                     $comment->setFlags(HumanHelp_Model_Comment::FLAG_APPROVED);
                 }
                 
@@ -52,6 +53,7 @@ class IndexController extends Zend_Controller_Action
         $this->view->book = $book; 
         $this->view->page = $page;
         $this->view->commentForm = $commentForm;
+        $this->view->commentsAreModerated = $config->moderateComments;  
     }
 }
 

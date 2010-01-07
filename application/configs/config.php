@@ -15,6 +15,9 @@ return array(
      * Can be an array of email addresses */
     'notifyComments' => 'shahar.e@zend.com',
 
+    /* Date Format */
+    'dateFormat' => 'l F jS H:i',
+
     /* Uncomment the next lines to enable reCaptcha protection for comments */
     /*
     'captcha' => array(
