@@ -44,7 +44,7 @@ class IndexController extends Zend_Controller_Action
                     // Redirect back to page
                     $this->_redirect("/$bookName/$pageName?done=ok#");
                 } catch (Exception $ex) {
-                    // Propagate error message
+                    throw $ex;
                 }
             }
         }

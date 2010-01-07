@@ -30,8 +30,10 @@ $this->headLink()->appendStylesheet($this->baseUrl . '/css/jquery.treeview.css')
         
         <div id="comments">
             <h2>User Comments</h2>
-            <p>There are currently no comments on this page</p>
-            
+            <div id="user-comments">
+                <?php echo $this->userComments($this->page); ?>            
+            </div>
+
             <div id="post-comment">
                 <h3>Post a Comment</h3>
                 <p>Please note: comments are moderated</p>

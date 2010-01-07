@@ -27,6 +27,16 @@ class HumanHelp_Model_Comment
     }
 
     /**
+     * Get the comment's ID
+     * 
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+    
+    /**
      * Save object in DB
      * 
      * @return HumanHelp_Model_Comment
@@ -87,6 +97,38 @@ class HumanHelp_Model_Comment
         } 
     }
 
+    /**
+     * Get comments for a page
+     * 
+     * @param  string  $bookName
+     * @param  string  $pageName
+     * @param  boolean $approvedOnly
+     * @return array
+     */
+    static public function getCommentsForPage($bookName, $pageName, $approvedOnly = true)
+    {
+       $table = new Zend_Db_Table('comments');
+       $select = $table->select()
+                       ->where('page = ?', $pageName)
+                       ->where('book = ?', $bookName)
+                       ->order('created_at DESC');
+                     
+        if ($approvedOnly) {
+            $select->where('flags & ?', self::FLAG_APPROVED);
+        }
+                     
+        $stmt = $select->query();
+                       
+        $comments = array();
+        while ($cData = $stmt->fetch(Zend_Db::FETCH_ASSOC)) {
+            $comment = new self($cData);
+            $comment->_id = $cData['id'];
+            $comments[] = $comment;
+        }
+        
+        return $comments;
+    }
+    
     /**
      * Generate a random (hopefully?) SHA1 token
      * 

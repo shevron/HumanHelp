@@ -104,5 +104,16 @@ class HumanHelp_Model_Page
     {
         return $this->_title;
     }
-    
+
+    /**
+     * Get comments for this page
+     * 
+     * @param  boolean $approvedOnly
+     * @return array
+     */
+    public function getComments($approvedOnly = true)
+    {
+        return HumanHelp_Model_Comment::getCommentsForPage(
+            $this->_book->getName(), $this->_pageName, $approvedOnly);
+    }
 }
