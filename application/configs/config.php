@@ -5,9 +5,18 @@
  */
 
 return array(
+    /* Default book to use when no book is passed in the URL */
     'defaultBook' => 'zend-server',
 
+    /* Require comment moderation? */
+    'moderateComments' => true,
+
+    /* Person to notify to when a new comment is posted.
+     * Can be an array of email addresses */
+    'notifyComments' => 'shahar.e@zend.com',
+
     /* Uncomment the next lines to enable reCaptcha protection for comments */
+    /*
     'captcha' => array(
         'type'    => 'recaptcha',
         'service' => array(
@@ -18,4 +27,5 @@ return array(
             'theme'      => 'clean'
         )
     )
+    */
 );

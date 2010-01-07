@@ -4,27 +4,53 @@ class IndexController extends Zend_Controller_Action
 {
     public function indexAction()
     {
-        $book = $this->_getParam('book', Zend_Registry::get('config')->defaultBook);
-        $page = $this->_getParam('page');
-
+        $bookName = $this->_getParam('book', Zend_Registry::get('config')->defaultBook);
+        $pageName = $this->_getParam('page');
+        
+        $book = new HumanHelp_Model_Book($bookName);
+        
+        if ($pageName) {
+            $page = $book->getPage($pageName);
+        } else {
+            $page = $book->getDefaultPage();
+            $pageName = $page->getName();
+        }
+        
         $commentForm = new HumanHelp_Form_Comment(array(
             'action' => '#post-comment'
         ));
+        
         if ($this->_request->isPost()) {
             $formData = $this->_request->getPost();
             if ($commentForm->isValid($formData)) {
-                echo 'w00t';
+                
+                $comment = new HumanHelp_Model_Comment(array(
+                    'author_name'  => $commentForm->getValue('name'),
+                    'author_email' => $commentForm->getValue('email'),
+                    'created_at'   => $_SERVER['REQUEST_TIME'],
+                    'book'         => $bookName,
+                    'page'         => $pageName,
+                    'comment'      => $commentForm->getValue('comment'),
+                    'token'        => HumanHelp_Model_Comment::generateToken(),
+                ));
+                
+                if (Zend_Registry::get('config')->moderateComments) {
+                    $comment->setFlags(HumanHelp_Model_Comment::FLAG_APPROVED);
+                }
+                
+                try {
+                    $comment->save();
+                
+                    // Redirect back to page
+                    $this->_redirect("/$bookName/$pageName?done=ok#");
+                } catch (Exception $ex) {
+                    // Propagate error message
+                }
             }
         }
         
-        $this->view->book = new HumanHelp_Model_Book($book);
-        
-        if ($page) {
-            $this->view->page = $this->view->book->getPage($page);
-        } else {
-            $this->view->page = $this->view->book->getDefaultPage();
-        }
-        
+        $this->view->book = $book; 
+        $this->view->page = $page;
         $this->view->commentForm = $commentForm;
     }
 }

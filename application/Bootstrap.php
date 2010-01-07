@@ -50,11 +50,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         return $view;
     }
     
-    protected function _initDb()
-    {
-
-    }
-    
     protected function _initAutoloader()
     {
         $autoloader = new Zend_Application_Module_Autoloader(array(
