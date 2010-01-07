@@ -23,6 +23,8 @@ return array(
     /*
     'smtpServer'  => 'my.smtp.server.com',
     'smtpOptions' => array(
+        'port'     => 587
+    //  'ssl'      => 'tls'
         'auth'     => 'password',
         'user'     => 'someuser',
         'password' => 'somepassword'

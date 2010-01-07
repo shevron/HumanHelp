@@ -88,7 +88,7 @@ class IndexController extends Zend_Controller_Action
         }
 
         if ($config->smtpServer) {
-            $transport = new Zend_Mail_Transport_Smtp($config->smtpServer, $config->smtpOptions);
+            $transport = new Zend_Mail_Transport_Smtp($config->smtpServer, $config->smtpOptions->toArray());
         } else {
             $transport = new Zend_Mail_Transport_Sendmail();
         }
