@@ -53,22 +53,23 @@ class HumanHelp_Form_Comment extends Zend_Form
         
         $captchaConfig = Zend_Registry::get('config')->captcha;
         if ($captchaConfig) {
+            
+            $captchaOptions = $captchaConfig->options->toArray();
+            
             if ($captchaConfig->type == 'recaptcha') {
                 $reCaptcha = new Zend_Service_ReCaptcha(
-                    $captchaConfig->options->publickey,
-                    $captchaConfig->options->privatekey
+                    $captchaConfig->service->publickey,
+                    $captchaConfig->service->privatekey
                 );
-                
-                $this->addElement('captcha', 'challenge', array(
-                    'captcha' => 'ReCaptcha',
-                    'captchaOptions' => array(
-                        'captcha' => 'reCaptcha',
-                        'service' => $reCaptcha
-                    ),
-                    'label' => 'Are you human?',
-                    'description' => 'Please verify that you are a real person by typing in the two words above'
-                ));
+                $captchaOptions['service'] = $reCaptcha;
             }
+                
+            $this->addElement('captcha', 'challenge', array(
+                'captcha' => $captchaConfig->type,
+                'captchaOptions' => $captchaOptions,
+                'label' => 'Are you human?',
+                'description' => 'Please verify that you are a real person by typing in the two words above'
+            ));
         }
 
 //        $book = new Zend_Form_Element('hidden', 'book');

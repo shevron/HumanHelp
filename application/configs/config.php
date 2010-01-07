@@ -5,17 +5,17 @@
  */
 
 return array(
-    /* The default book to view if no book is specified in the URL */
     'defaultBook' => 'zend-server',
 
     /* Uncomment the next lines to enable reCaptcha protection for comments */
-    /*
     'captcha' => array(
-        'type' => 'recaptcha',
+        'type'    => 'recaptcha',
+        'service' => array(
+            'publickey'  => '6LfEWgoAAAAAAI0WlkYqb0MbfFKz9X_V8B1CVRpY',
+            'privatekey' => '6LfEWgoAAAAAAFfsHs_0VK85Lxi0UZlsjRoOM2dJ',
+        ),
         'options' => array(
-            'publickey'  => 'yourpublickey',
-            'privatekey' => 'yourprivatekey'
+            'theme'      => 'clean'
         )
     )
-    */
 );
