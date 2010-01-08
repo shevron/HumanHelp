@@ -182,5 +182,13 @@ class HumanHelp_Model_Book
                 $element->setAttribute('background', '../media/' . $this->_bookName . '/' . $bg);
             } 
         }
+        
+        // Fix poopup URLs
+        $popupHrefs = $xpath->query('//h:a[starts-with(@href, "javascript:BSSCPopup(")]');
+        foreach ($popupHrefs as $element) {
+            $href = $element->getAttribute('href');
+            $href = preg_replace('/([\'"]\);)$/', '?layout=contentOnly\1', $href);
+            $element->setAttribute('href', $href);
+        }
     }
 }

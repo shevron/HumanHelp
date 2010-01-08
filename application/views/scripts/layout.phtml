@@ -17,16 +17,20 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>';
     <?php echo $this->headScript(); ?>
 </head>
 <body>
+<?php if (! $this->contentOnly): ?>
     <div id="upper-bar">
         <h1><?php echo (isset($this->book) ? htmlspecialchars($this->book->getTitle()) : 'Default Title'); ?></h1>
     </div>
+<?php endif; ?>
     
     <div id="page-content">
         <?php echo $this->layout()->content; ?>
     </div>
-    
+
+<?php if (! $this->contentOnly): ?>    
     <div id="footer">
         Powered by HumanHelp 0.1
     </div>
+<?php endif; ?>
 </body>
 </html>

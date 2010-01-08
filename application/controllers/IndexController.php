@@ -51,6 +51,8 @@ class IndexController extends Zend_Controller_Action
             }
         }
         
+        $this->view->contentOnly = $this->_getParam('layout') == 'contentOnly';
+        
         $this->view->book = $book; 
         $this->view->page = $page;
         $this->view->commentForm = $commentForm;

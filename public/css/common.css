@@ -9,7 +9,8 @@ body {
 
 #toc-sidebar {
 	float: left;
-	width: 180px;
+	position: relative;
+	width: 200px;
 	font-size: 9pt;
 }
 
@@ -19,8 +20,8 @@ body {
 	padding-left: 1em;
 }
 
-#content {
-	padding-left: 220px; 
+#content.has-sidebar {
+	padding-left: 230px;
 }
 
 #footer {
