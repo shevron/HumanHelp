@@ -1,4 +1,41 @@
-<b>This</b> is the HTML version. 
-<pre>
-<?php var_dump($this->comment); ?>
-</pre>
+<p>Hi,</p> 
+<p>
+    A new comment has been posted on page the page titled 
+    <em>"<?php echo htmlspecialchars($this->page->getTitle()); ?>"</em> in the book 
+    <em>"<?php echo htmlspecialchars($this->page->getBook()->getTitle()); ?>"</em>. 
+</p>
+
+<dl>
+    <dt>User name: </dt>
+    <dd><?php echo htmlspecialchars($this->comment->getAuthorName()); ?></dd>
+    <dt>User email: </dt>
+    <dd><a href="mailto:<?php echo $this->comment->getAuthorEmail(); ?>"><?php echo $this->comment->getAuthorEmail(); ?></a></dd>
+    <dt>Comment:</dt>
+    <dd><q><?php echo $this->formatCommentHtml($this->comment->getComment()); ?></q></dd>
+</dl> 
+    
+<p>
+<?php if ($this->comment->isApproved()): 
+$pageUrl = $this->baseUrl . '/' . urlencode($this->page->getBook()->getName()) .
+                            '/' . urlencode($this->page->getName()) . 
+                            '#comment-' . $this->comment->getId(); 
+?>
+    To view the comment in the page it was posted to, please visit <a href="<?php echo $pageUrl; ?>"><?php echo $pageUrl; ?></a>
+<?php else: 
+$handleUrl = $this->baseUrl . '/comment/moderate/' . $this->comment->getToken();
+?>
+    The comment will not be displayed to users until you approve it. To do so, please click the following link:
+    <a href="<?php echo $handleUrl; ?>"><?php echo $handleUrl; ?></a> 
+<?php endif; ?>
+</p>
+
+<p>
+Thanks!
+</p>
+
+<p>
+    -----<br />
+    This email was sent automatically by the HumanHelp system installed on 
+    <a href="<?php echo $this->baseUrl ?>"><?php echo $this->baseUrl ?></a>. If you do not wish to get
+    any more of these emails, please contact the site's administrator.  
+</p>

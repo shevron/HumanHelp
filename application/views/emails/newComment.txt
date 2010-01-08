@@ -1,5 +1,0 @@
-*This* is the plain text version. 
-
-----
-<?php var_dump($this->comment); ?> 
-----

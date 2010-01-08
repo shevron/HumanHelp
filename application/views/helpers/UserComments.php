@@ -35,7 +35,7 @@ class HumanHelp_View_Helper_UserComments extends Zend_View_Helper_Abstract
         $html = '<div class="comment" id="comment-' . $comment->getId() . '">' . 
                 '<h3>On ' . $this->_formatDate($comment->getCreatedAt()) . 
                 ', ' . htmlspecialchars($comment->getAuthorName()) . ' said:</h3>' . 
-                '<div class="comment-content">' . $this->_formatComment($comment->getComment()) . '</div>' .
+                '<div class="comment-content">' . $this->view->formatCommentHtml($comment->getComment()) . '</div>' .
                 "</div>\n";
 
         return $html;
@@ -44,10 +44,5 @@ class HumanHelp_View_Helper_UserComments extends Zend_View_Helper_Abstract
     protected function _formatDate($timestamp)
     {
         return date($this->_dateFormat, $timestamp);
-    }
-    
-    protected function _formatComment($text)
-    {
-        return nl2br(htmlspecialchars($text));
     }
 }

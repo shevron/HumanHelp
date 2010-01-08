@@ -37,6 +37,16 @@ class HumanHelp_Model_Comment
     }
     
     /**
+     * Check if this comment is approved
+     * 
+     * @return boolean
+     */
+    public function isApproved()
+    {
+        return (boolean) $this->_data['flags'] & self::FLAG_APPROVED;
+    }
+    
+    /**
      * Save object in DB
      * 
      * @return HumanHelp_Model_Comment

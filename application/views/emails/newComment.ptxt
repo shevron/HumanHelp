@@ -1,0 +1,28 @@
+Hi, 
+
+A new comment has been posted on page the page titled "<?php echo $this->page->getTitle(); ?>" in the book "<?php echo $this->page->getBook()->getTitle(); ?>". 
+
+User name:
+  <?php echo $this->comment->getAuthorName(); ?>
+User email:
+  <?php echo $this->comment->getAuthorEmail(); ?>
+Comment:
+  <?php echo $this->comment->getComment() ?>
+
+<?php if ($this->comment->isApproved()): 
+$pageUrl = $this->baseUrl . '/' . urlencode($this->page->getBook()->getName()) .
+                            '/' . urlencode($this->page->getName()) . 
+                            '#comment-' . $this->comment->getId(); 
+?>
+To view the comment in the page it was posted to, please visit <?php echo $pageUrl; ?> .
+<?php else: 
+$handleUrl = $this->baseUrl . '/comment/moderate/' . $this->comment->getToken();
+?>
+The comment will not be displayed to users until you approve it. To do so, please click the following link: <?php echo $handleUrl; ?> . 
+<?php endif; ?>
+
+Thanks!
+
+-----
+This email was sent automatically by the HumanHelp system installed on <?php echo $this->baseUrl ?>. 
+If you do not wish to get any more of these emails, please contact the site's administrator.  

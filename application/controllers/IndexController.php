@@ -63,14 +63,15 @@ class IndexController extends Zend_Controller_Action
         
         $emailTemplate = new Zend_View();
         $emailTemplate->setScriptPath(APPLICATION_PATH . '/views/emails');
+        $emailTemplate->addHelperPath(APPLICATION_PATH . '/views/helpers', 'HumanHelp_View_Helper_');
         $emailTemplate->setEncoding('UTF-8');
         
         $emailTemplate->comment = $comment;
         $emailTemplate->page = $page;
-        $emailTemplate->baseUrl = $this->view->baseUrl;
+        $emailTemplate->baseUrl = 'http://' . $_SERVER['HTTP_HOST'] . $this->view->baseUrl;
         
         $bodyHtml = $emailTemplate->render('newComment.phtml');
-        $bodyText = $emailTemplate->render('newComment.txt');
+        $bodyText = $emailTemplate->render('newComment.ptxt');
          
         $mail = new Zend_Mail();
         $mail->setType(Zend_Mime::MULTIPART_ALTERNATIVE)
