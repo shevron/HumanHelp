@@ -57,6 +57,14 @@ class IndexController extends Zend_Controller_Action
         $this->view->commentsAreModerated = $config->moderateComments;  
     }
     
+    /**
+     * Send email notification to moderators when a new comment is posted
+     * 
+     * @todo move logic to model / library class
+     * 
+     * @param HumanHelp_Model_Comment $comment
+     * @param HumanHelp_Model_Page $page
+     */
     public function _sendNewCommentEmail(HumanHelp_Model_Comment $comment, HumanHelp_Model_Page $page)
     {
         $config = Zend_Registry::get('config');
