@@ -38,7 +38,7 @@ Overall, to install HumanHelp: (this process may be automated in the future)
   PostgreSQL, Oracle, IBM DB2, etc.). To create an SQLite DB, run the following
   command in the project's root directory: 
 
-    cat tools/schema.sql | sqlite3 data/data.sq3
+	$ cat tools/schema.sql | sqlite3 data/data.sq3
 
 Note that you must have the Sqlite 3 tool installed - the command's name may 
 vary but on most systems it's `sqlite3`. 
