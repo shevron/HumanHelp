@@ -25,6 +25,7 @@ For now HumanHelp still requires a lot of manual work in order to set up.
 Please contact the maintainers for detailed usage information. 
 
 Overall, to install HumanHelp: (this process may be automated in the future)
+
 - Have Zend Framework 1.9+ in your include_path. If you don't have a PHP 
   environment set up, install [Zend Server CE][2] - as it already includes
   Zend Framework. 
@@ -37,7 +38,7 @@ Overall, to install HumanHelp: (this process may be automated in the future)
   PostgreSQL, Oracle, IBM DB2, etc.). To create an SQLite DB, run the following
   command in the project's root directory: 
 
-  cat tools/schema.sql | sqlite3 data/data.sq3
+    cat tools/schema.sql | sqlite3 data/data.sq3
 
 Note that you must have the Sqlite 3 tool installed - the command's name may 
 vary but on most systems it's `sqlite3`. 
@@ -48,6 +49,7 @@ vary but on most systems it's `sqlite3`.
   and edit it to suite your needs. 
 
 Now, you should deploy your first book:
+
 - Export the contents of your full RoboHelp project as XHTML
 - pick a book name - this name will be used in the URL of the help files. 
   For example if your documentation is for a product called 'My Confabulator',
