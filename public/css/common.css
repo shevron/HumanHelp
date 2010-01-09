@@ -1,13 +1,27 @@
 body {
-	font-size: 10pt; 
 	font-family: Arial, Verdana, Sans-serif; 
+	padding: 0px;
+	margin: 0px;
+}
+
+a {
+	color: #3515B0;
 }
 
 #upper-bar {
-	background-color: #eee;
+    font-family: Georgia;
+    font-size: 14pt;
+	padding: 1em;
+	background-color: #0A67A3;
+	color: #fff;
+}
+
+#upper-bar h1 {
+	margin: 0;
 }
 
 #toc-sidebar {
+	padding: 1em;
 	float: left;
 	position: relative;
 	width: 200px;
@@ -20,15 +34,20 @@ body {
 	padding-left: 1em;
 }
 
+#content {
+	padding: 1em;
+}
+
 #content.has-sidebar {
 	padding-left: 230px;
 }
 
 #footer {
+    background-color: #0A67A3;
 	clear: both;
 	padding: 2em;
 	font-size: 9pt;
-	color: #aaa;
+	color: #65A6D1;
 	text-align: center;
 }
 
