@@ -8,6 +8,8 @@ class IndexController extends Zend_Controller_Action
         $bookName = $this->_getParam('book', $config->defaultBook);
         $pageName = $this->_getParam('page');
         
+        // FIXME: Security check for $bookName and $pageName
+        
         $book = new HumanHelp_Model_Book($bookName);
         
         if ($pageName) {
