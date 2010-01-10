@@ -63,7 +63,11 @@ class HumanHelp_Model_Book
         }
         $contentBody = $contentBody->item(0);
         
-        $this->_filterContentBody($contentBody, $contentXml);
+        // Process document through XHTML filters
+        foreach($this->_getXhtmlFilters() as $filter) { /* @var $filter HHLib_XhtmlFilter_Abstract */
+            $filter->setDomDocument($contentXml);
+            $filter->filter($contentBody);
+        }
         
         $content = '';
         foreach($contentBody->childNodes as $bodyChild) { /* @var $bodyChild DOMNode */
@@ -145,50 +149,30 @@ class HumanHelp_Model_Book
         
         return $this->_bookXml;
     }
-
+    
     /**
-     * Pass the content body through some filters
+     * Get all page filter objects registered for this book
      * 
-     * @todo Make these filters pluggable
+     * @todo   Read filter specific configuration from XML and pass to filter
      * 
-     * @param DOMElement $body
+     * @return array
      */
-    protected function _filterContentBody(DOMElement $body, DOMDocument $doc)
+    protected function _getXhtmlFilters()
     {
-        // Fix all <img> tags
-        $xpath = new DOMXPath($doc);
-        $xpath->registerNamespace('h', 'http://www.w3.org/1999/xhtml');
-        $images = $xpath->query('//h:img[@src] | //h:script[@src]');
-        foreach($images as $imgTag) {
-            $src = $imgTag->getAttribute('src');
-            if (! preg_match('|^https?://|', $src)) {
-                $imgTag->setAttribute('src', '../media/' . $this->_bookName . '/' . $src);
-            }
+        $this->_lazyLoadBookXml();
+        $filters = array();
+        
+        $globalConfig = array(
+            'bookName' => $this->_bookName
+        );
+        
+        foreach($this->_bookXml->pageFilters->filter as $filterClass) {
+            $filterClass = (string) $filterClass['class']; 
+            Zend_Loader::loadClass($filterClass);
+            $filter = new $filterClass($globalConfig); /* @var $filter HHLib_XhtmlFilter_Abstract */
+            $filters[] = $filter;
         }
         
-        // Fix all url references in inline style attributes
-        $hasStyle = $xpath->query('//h:*[contains(@style, "url")]');
-        foreach ($hasStyle as $hs) {
-            $style = $hs->getAttribute('style');
-            $style = preg_replace('/url\((.+?)\)/', 'url(../media/' . $this->_bookName . '/\1)', $style);
-            $hs->setAttribute('style', $style); 
-        }
-        
-        // Fix all background references
-        $hasbg = $xpath->query('//h:*[@background]');
-        foreach ($hasbg as $element) {
-            $bg = $element->getAttribute('background');
-            if (! preg_match('|^https?://|', $bg)) {
-                $element->setAttribute('background', '../media/' . $this->_bookName . '/' . $bg);
-            } 
-        }
-        
-        // Fix poopup URLs
-        $popupHrefs = $xpath->query('//h:a[starts-with(@href, "javascript:BSSCPopup(")]');
-        foreach ($popupHrefs as $element) {
-            $href = $element->getAttribute('href');
-            $href = preg_replace('/([\'"]\);)$/', '?layout=contentOnly\1', $href);
-            $element->setAttribute('href', $href);
-        }
+        return $filters;
     }
 }
