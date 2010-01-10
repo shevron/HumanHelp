@@ -82,16 +82,30 @@ class HumanHelp_Xml_Converter_RobohelpXhtml
             throw new ErrorException("Unable to find book title attribute");
         }
         
-        // Write root elements
+        // Start XML and write root element
         $this->_writer->startDocument('1.0', 'UTF-8');
         $this->_writer->startElement('book');
         $this->_writer->writeAttribute('xmlns', 'http://arr.gr/humanhelp/book');
         $this->_writer->writeAttribute('timestamp', time());
+        
+        // Write title
         $this->_writer->writeElement('title', $bookTitle);
         
-        $this->_writer->startElement('toc');
+        // Write default pageFilters
+        $this->_writer->startElement('pageFilters');
         
-        // Start reading the TOC
+        $this->_writer->startElement('filter');
+        $this->_writer->writeAttribute('class', 'HHLib_XhtmlFilter_FixMediaUrls');
+        $this->_writer->endElement();
+        
+        $this->_writer->startElement('filter');
+        $this->_writer->writeAttribute('class', 'HHLib_XhtmlFilter_FixBSSCPopupUrls');
+        $this->_writer->endElement();
+        
+        $this->_writer->endElement();
+        
+        // Start creating the the TOC
+        $this->_writer->startElement('toc');
         while ($this->_reader->read()) {
             if ($this->_reader->nodeType == XMLReader::ELEMENT) {
                 switch ($this->_reader->name) {
