@@ -47,7 +47,7 @@ class HumanHelp_Model_Book
         $page->setBook($this);
         
         // Load page content
-        $contentFile = $this->_bookDataPath . $pageName;
+        $contentFile = $this->_bookDataPath . 'content' . DIRECTORY_SEPARATOR . $pageName;
         if (! is_readable($contentFile)) {
             throw new ErrorException("Page $pageName does not exist $contentFile");
         }
