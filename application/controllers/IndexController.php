@@ -10,6 +10,10 @@ class IndexController extends Zend_Controller_Action
         
         // FIXME: Security check for $bookName and $pageName
         
+        $messanger = new HHLib_FlashMessanger(new HHLib_FlashMessanger_Backend_Cookie(), array(
+            'cookiePath' => $this->view->baseUrl . '/'
+        ));
+        
         $book = new HumanHelp_Model_Book($bookName);
         
         if ($pageName) {
@@ -45,8 +49,17 @@ class IndexController extends Zend_Controller_Action
                     $comment->save();
                     $this->_sendNewCommentEmail($comment, $page);
                     
+                    // Set a message
+                    if ($config->moderateComments) {
+                        $message = "Thank you for commenting. Your comment will appear on this page after it is  reviewed by our staff";
+                    } else {
+                        $message = "Thank you for commenting on this page!";
+                    }
+                    
+                    $messanger->add($message);
+                    
                     // Redirect back to page
-                    $this->_redirect("/$bookName/$pageName?done=ok#");
+                    $this->_redirect("/$bookName/$pageName");
                 } catch (Exception $ex) {
                     throw $ex;
                 }
@@ -55,6 +68,7 @@ class IndexController extends Zend_Controller_Action
         
         $this->view->contentOnly = $this->_getParam('layout') == 'contentOnly';
         
+        $this->view->messages = $messanger->getAllMessages();
         $this->view->book = $book; 
         $this->view->page = $page;
         $this->view->commentForm = $commentForm;

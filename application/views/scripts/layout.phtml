@@ -24,6 +24,11 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>';
 <?php endif; ?>
     
     <div id="page-content">
+<?php if ($this->messages): ?>
+        <div id="message-pane">
+            <?php echo $this->formatMessagesHtml($this->messages); ?>
+        </div>
+<?php endif; ?>
         <?php echo $this->layout()->content; ?>
     </div>
 
