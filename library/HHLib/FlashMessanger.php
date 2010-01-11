@@ -89,7 +89,7 @@ class HHLib_FlashMessanger implements Countable /*, Iterator */
     public function getAllMessages()
     {
         $messages = $this->_backend->getMessages();
-        $this->_backend->clearMessages();
+        if (! empty($messages)) $this->_backend->clearMessages();
         
         return $messages;
     }
