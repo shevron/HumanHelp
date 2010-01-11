@@ -9,8 +9,8 @@ a {
 }
 
 #upper-bar {
-    font-family: Georgia;
-    font-size: 14pt;
+	font-family: Georgia;
+	font-size: 14pt;
 	padding: 1em;
 	background-color: #0A67A3;
 	color: #fff;
@@ -18,6 +18,9 @@ a {
 
 #upper-bar h1 {
 	margin: 0;
+	font-family: inherit;
+	color: inherit;
+	background-color: inherit;
 }
 
 #toc-sidebar {
