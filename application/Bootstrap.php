@@ -41,9 +41,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         );
         $viewRenderer->setView($view);
         
-        // Add some stylesheet
-        $view->headLink()->appendStylesheet($view->baseUrl . '/css/default.css');
-
         $view->addHelperPath(APPLICATION_PATH . '/views/helpers', 'HumanHelp_View_Helper_');
         
         // Return it, so that it can be stored by the bootstrap
