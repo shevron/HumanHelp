@@ -94,3 +94,35 @@ form dd p.description {
     color: #777;
 }
 
+/**
+ * Messages
+ */
+
+#message-pane .message {
+	border: 1px solid black;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	font-size: 10pt;
+	font-weight: bold;
+	padding: 3px;
+	margin: 3px;
+	padding-left: 20px;
+}
+
+#message-pane .info-message {
+    border-color: #2a2;
+    background: url(images/message-info.png) 2px center no-repeat;
+    background-color: #cfc;
+}
+
+#message-pane .warning-message {
+    border-color: #aa2;
+    background: url(images/message-warn.png) 2px center no-repeat;
+    background-color: #ffa;
+}
+
+#message-pane .error-message {
+    border-color: #a22;
+    background: url(images/message-error.png) 2px center no-repeat;
+    background-color: #fcc;
+}
