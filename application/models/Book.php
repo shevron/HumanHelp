@@ -135,6 +135,50 @@ class HumanHelp_Model_Book
     }
     
     /**
+     * Get the layout file associated with this book, if any
+     * 
+     * @return string | null File path or NULL if not defined
+     */
+    public function getLayoutFile()
+    {
+        $this->_lazyLoadBookXml();
+        if ($this->_bookXml->theme && $this->_bookXml->theme->template) {
+            $file = $this->_bookDataPath . (string) $this->_bookXml->theme->template["file"];
+            return preg_replace('/\.phtml$/', '', $file); // Strip out suffix
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * Get array of stylesheets associated with this book
+     * 
+     * For each stylesheet, an array is returned with the following keys:
+     *  - href - path to stylesheet, in the media directory
+     *  - type - usually 'text/css' - may null if not set in the XML
+     *  - media - to be used in the <link> tag "media" attribute. May be null
+     *  
+     *  @return array
+     */
+    public function getStylesheets()
+    {
+        $stlyesheets = array();
+        
+        $this->_lazyLoadBookXml();
+        if ($this->_bookXml->theme) {
+            foreach ($this->_bookXml->theme->stylesheet as $sheet) {
+                if (isset($sheet['href'])) $stylesheets[] = array(
+                    'href'  => 'media/' . urlencode($this->_bookName) . '/' . (string) $sheet['href'],
+                    'type'  => (isset($sheet['type']) ? (string) $sheet['type'] : null),
+                    'media' => (isset($sheet['media']) ? (string) $sheet['media'] : null),
+                );
+            }
+        }
+        
+        return $stylesheets;
+    }
+    
+    /**
      * Preform lazy loading of the book XML file, if not done yet
      * 
      * @return SimpleXmlElement

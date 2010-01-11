@@ -1,5 +1,17 @@
 <?php 
 
+// Set page layout and stylesheets, if defined
+if (($layout = $this->book->getLayoutFile()) != null) {
+    $this->layout()->setViewScriptPath(dirname($layout))
+                   ->setLayout(basename($layout));
+}
+
+foreach($this->book->getStylesheets() as $stylesheet) {
+    $this->headLink()->appendStylesheet($this->baseUrl . '/' . $stylesheet['href'], 
+        $stylesheet['media'], null, array('type' => $stylesheet['type'])
+    );
+}
+
 $this->headTitle($this->book->getTitle());
 $this->headTitle($this->page->getTitle());
 
