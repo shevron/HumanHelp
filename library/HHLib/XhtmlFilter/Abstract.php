@@ -14,7 +14,10 @@ abstract class HHLib_XhtmlFilter_Abstract
      * 
      * @var array
      */
-    protected $_config = array();
+    protected $_config = array(
+        'bookName' => null,
+        'baseUrl'  => null
+    );
     
     public function __construct(array $config = array())
     {

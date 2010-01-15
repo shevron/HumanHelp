@@ -7,7 +7,7 @@
 
 return array(
     'book' => array(
-        'route' => ':book',
+        'route' => 'content/:book',
         'defaults' => array(
             'controller' => 'index',
             'action'     => 'index'
@@ -15,7 +15,7 @@ return array(
     ),
     
     'book-page' => array(
-        'route' => ':book/:page',
+        'route' => 'content/:book/:page',
         'defaults' => array(
             'controller' => 'index',
             'action'     => 'index'

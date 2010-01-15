@@ -5,7 +5,8 @@ class HHLib_XhtmlFilter_FixMediaUrls extends HHLib_XhtmlFilter_Abstract
     public function filter(DOMElement $element)
     {
         $xpath = $this->_getXpath();
-        $mediaUrl = '../media/' . urlencode($this->_config['bookName']) . '/';
+        $mediaUrl = $this->_config['baseUrl'] . '/media/' . 
+            urlencode($this->_config['bookName']) . '/';
         
         // Fix all <img> and <script> tags
         $images = $xpath->query('//h:img[@src] | //h:script[@src]');
@@ -32,6 +33,5 @@ class HHLib_XhtmlFilter_FixMediaUrls extends HHLib_XhtmlFilter_Abstract
                 $element->setAttribute('background', $mediaUrl . $bg);
             } 
         }
-        
     }
 }

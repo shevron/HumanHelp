@@ -15,6 +15,7 @@ class IndexController extends Zend_Controller_Action
         ));
         
         $book = new HumanHelp_Model_Book($bookName);
+        $book->setBaseUrl($this->view->baseUrl);
         
         if ($pageName) {
             $page = $book->getPage($pageName);
@@ -123,4 +124,3 @@ class IndexController extends Zend_Controller_Action
         $mail->send($transport);
     }
 }
-

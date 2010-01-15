@@ -23,6 +23,13 @@ class HumanHelp_Model_Book
      */
     protected $_bookXml = null;
     
+    /**
+     * Base URL of the application
+     * 
+     * @var string
+     */
+    protected $_baseUrl = '';
+    
     public function __construct($bookName, $dataPath = null)
     {
         $this->_bookName = $bookName;
@@ -179,6 +186,18 @@ class HumanHelp_Model_Book
     }
     
     /**
+     * Set the application's base URL. This is used when constructing page and media URLs.
+     *  
+     * @param  string $url
+     * @return HumanHelp_Model_Book
+     */
+    public function setBaseUrl($url)
+    {
+        $this->_baseUrl = $url;
+        return $this;
+    }
+    
+    /**
      * Preform lazy loading of the book XML file, if not done yet
      * 
      * @return SimpleXmlElement
@@ -207,7 +226,8 @@ class HumanHelp_Model_Book
         $filters = array();
         
         $globalConfig = array(
-            'bookName' => $this->_bookName
+            'bookName' => $this->_bookName,
+            'baseUrl'  => $this->_baseUrl
         );
         
         foreach($this->_bookXml->pageFilters->filter as $filterClass) {

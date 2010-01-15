@@ -6,7 +6,7 @@ class HumanHelp_View_Helper_TableOfContents extends Zend_View_Helper_Abstract
     
     public function tableOfContents(HumanHelp_Model_Book $book, HumanHelp_Model_Page $page = null)
     {
-        $this->_baseUrl = $this->view->baseUrl . '/' . $book->getName() . '/';
+        $this->_baseUrl = $this->view->baseUrl . '/content/' . $book->getName() . '/';
         
         $html = '<ul class="toc">' . $this->_getSubTree($book->getToc()) . '</ul>';
         return $html;
