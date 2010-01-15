@@ -60,7 +60,8 @@ class IndexController extends Zend_Controller_Action
                     $messanger->add($message);
                     
                     // Redirect back to page
-                    $this->_redirect("/$bookName/$pageName");
+                    $this->_redirect("/content/$bookName/$pageName");
+                    
                 } catch (Exception $ex) {
                     throw $ex;
                 }
