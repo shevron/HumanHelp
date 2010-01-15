@@ -95,6 +95,39 @@ form dd p.description {
 }
 
 /**
+ * Comments
+ */
+#content #comments {
+	font-size: 10pt;
+	border-top: 1px solid black;
+}
+
+#content #comments h2 {
+	font-size: 14pt;
+}
+
+#content #comments #post-comment {
+	margin-top: 1em;
+	border-top: 1px solid #999;
+}
+
+#user-comments .comment h3 {
+	margin: 0px;
+	margin-top: 1em;
+	padding: 3px;
+	padding-left: 20px;
+	background: url(images/comment.png) 2px center no-repeat;
+	border-top: 1px solid #999;
+}
+
+#user-comments .comment .comment-content {
+    margin: 0px;
+    margin-bottom: 1em;
+    padding: 3px;
+    padding-left: 25px;
+}
+
+/**
  * Messages
  */
 
